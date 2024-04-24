@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "ClearVision_API": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7019",
+      "launchBrowser": false
+    }
+  }
+}
