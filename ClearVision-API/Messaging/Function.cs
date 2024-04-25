@@ -13,6 +13,7 @@ namespace ClearVision_API.Messaging
     public static class Function
     {
         [FunctionName("Function")]
+        [Route("[controller]")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
