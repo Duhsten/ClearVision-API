@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy dotnet core app to Azure Function App - clearvisionapi
+name: Build and deploy dotnet core app to Azure Function App - cvlms-functions
 
 on:
   push:
@@ -16,12 +16,9 @@ env:
 jobs:
   build-and-deploy:
     runs-on: windows-latest
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
     steps:
       - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
         uses: actions/setup-dotnet@v1
@@ -34,19 +31,12 @@ jobs:
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
           popd
-      
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_51B07229C2384D04B494257486166DBD }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_83705712D06545CF84046821A29806C2 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F6B684C3412245EBBA24B78C4464B05F }}
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
         with:
-          app-name: 'clearvisionapi'
-          slot-name: 'Production'
+          app-name: 'cvlms-functions'
+          slot-name: 'development'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7274CFBAC06F44F9A846E933E2D231C6 }}
