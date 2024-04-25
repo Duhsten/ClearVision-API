@@ -16,6 +16,7 @@ namespace ClearVision_API.Messaging.Models
         public string UserId { get; set; } = null!;
         public User()
         {
+
             _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Users.json");
         }
         public async Task<List<User>?> GetUsers(CancellationToken token)
